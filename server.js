@@ -41,7 +41,7 @@ app.get('/', function (req, res) {
 
 
 // api data
-app.get('/cars', function (req, res) {
+app.get('/tasks', function (req, res) {
     connection.query("SELECT * FROM todos", function (error, results) {
         res.send(results)
     });

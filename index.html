@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -14,25 +16,55 @@
 
     <h1>Hello world!</h1>
     <div id="container">
+        <h2>What are you adding</h2>
+        <form class="create-form">
 
+            <div class="form-group">
+                <label for="newTask">New Task:</label>
+                <input type="text" id="newTask" name="todo_name">
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <h2>tasks</h2>
+                    <hr>
+                    <div id="task-area"></div>
+                </div>
+            </div>
     </div>
+
+
 
 </body>
 
 </html>
 
 <script>
-    $.ajax({
-        method: "GET",
-        url: '/cars'
-    }).then(function (data) {
-        console.log(data);
-        for (let i = 0; i < data.length; i++) {
-            $('#container').append(` task: ${data[i].todo_name} <button class="remove">Remove</button><br>`)
-        }
-    });
+    // $.ajax({
+    //     method: "GET",
+    //     url: '/tasks'
+    // }).then(function (data) {
+    //     console.log(data);
+    //     for (let i = 0; i < data.length; i++) {
+    //         $('#container').append(` task: ${data[i].todo_name} <button class="remove">Remove</button><br>`)
 
-    $(document).on("click", function () {
+    //     };
+
+    // });
+    $.get('/tasks', function (data) {
+        for (var i = 0; i < data.length; i++) {
+
+            var row = $("<div>");
+            row.addClass("newTask");
+            // row.append("<p>" + data[i].todo_name + <button class="remove">Remove</button> + "</p>");
+            // row.append("<p>At " + moment(data[i].created_at).format("h:mma on dddd") + "</p>");
+            $('#container').append(` task: ${data[i].todo_name} <button class="remove">Remove</button><br>`)
+            $("#task-area").prepend(row);
+        }
+    })
+
+
+    $(".remove").on("click", function () {
         console.log("works");
 
         //make ajax request to a route designed to remove 1 todo from db
